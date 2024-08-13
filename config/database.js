@@ -15,7 +15,7 @@ const connection = async()=>{
 
 
     // Sync all models
-        await sequelize.sync({ force: true }); // `force: false` prevents dropping tables if they already exist
+        await sequelize.sync({ force: false }); // `force: false` prevents dropping tables if they already exist
         console.log('All models were synchronized successfully.');
 
       } catch (error) {
