@@ -5,9 +5,12 @@ const userController = require('../controllers/userController')
 const authController = require('../controllers/authController')
 
 router.post('/signup', authController.signup);
-router.get('/login', authController.login);	
+router.post('/login', authController.login);	
+router.post('/forgetPassword', authController.forgetPassword);	
+router.post('/resetPassword/:token', authController.resetPassword);
 
 router.route('/').get(userController.getAllUsers);
-router.route('/:id').get(userController.getUser);
+//router.route('/:id').get(userController.getUser);
+router.route('/test').get(userController.tesing);
 
 module.exports = router;

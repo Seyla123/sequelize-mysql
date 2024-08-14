@@ -1,9 +1,7 @@
-const { DataTypes } = require("sequelize");
+const { Model, DataTypes } = require("sequelize");
 const sequelize = require("../config/database");
-const bcrypt = require("bcrypt");
-const crypto= require("crypto");
-const User = sequelize.define(
-  "User",
+class MyUser extends Model {}
+MyUser.init(
   {
     name: {
       type: DataTypes.STRING,
@@ -53,11 +51,13 @@ const User = sequelize.define(
         },
       },
     },
-    passwordChangedAt:DataTypes.DATE,
-    passwordResetToken:DataTypes.STRING,
+    passwordChangedAt: DataTypes.DATE,
+    passwordResetToken: DataTypes.STRING,
     passwordResetExpires: DataTypes.DATE,
   },
   {
+    sequelize,
+    modelName: "MyUser",
     timestamps: true, // Adds `createdAt` and `updatedAt` fields automatically
     underscored: true, // Use snake_case for the automatically added fields
     defaultScope: {
@@ -76,32 +76,4 @@ const User = sequelize.define(
   }
 );
 
-// remove password and passwordConfirm fields from user object before sending it to the client
-User.prototype.toSafeObject = function () {
-  const { password, passwordConfirm, ...safeData } = this.get();
-  return safeData;
-};
-// check if password is correct
-User.prototype.correctPassword = async function (
-  candidatePassword,
-  userPassword
-) {
-  return await bcrypt.compare(candidatePassword, userPassword);
-};
-// check if password was changed after the given timestamp
-User.prototype.changedPasswordAfter = function (JWTTimestamp) {
-  if (this.passwordChangedAt) {
-    const changedTimestamp = parseInt(this.passwordChangedAt.getTime() / 1000, 10 );
-    return JWTTimestamp < changedTimestamp;
-  }
-  return false;
-}
-// create reset password token
-User.prototype.createPasswordResetToken = function(){
-    const resetToken = crypto.randomBytes(32).toString('hex');
-    this.passwordResetToken = crypto.createHash('sha256').update(resetToken).digest('hex');
-    this.passwordResetExpires = Date.now() + 10 * 60 * 1000;
-    return resetToken
-}
-
-module.exports = User;
+module.exports = MyUser;

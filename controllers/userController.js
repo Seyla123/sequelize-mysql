@@ -1,4 +1,5 @@
 const User = require('../models/userModel');
+const MyUser = require('../models/myuser');
 const catchAsync = require('../utils/catchAsync');
 
 exports.getAllUsers=  catchAsync( async (req, res,next) => {
@@ -17,3 +18,16 @@ exports.getUser =  (req, res) => {
     console.log('get All User router'); 
     res.status(200).json({message: 'get user'})
 }
+
+exports.tesing =  catchAsync(async(req, res) => {
+    console.log('get All User sasd  router');
+    try {
+     const myUser = await MyUser.findAll();
+     console.log('myUser :', myUser);
+     
+    res.status(200).json({message: 'get user',myUser})
+    } catch (error) {
+        console.log(error);
+        
+    }
+})
