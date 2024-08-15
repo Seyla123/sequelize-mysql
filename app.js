@@ -12,6 +12,8 @@ const GlobalHandleError = require('./controllers/errorController');
 
 // model 
 const User = require('./models/userModel');
+const email = ['sopheak1013@gmail.com,channarakluy@gmail.com,raksasparkle@gmail.com,sveitast7@gmail.com, seav.seyla0975634833@gmail.com,sokchanseiha@gmail.com, Mrrseyla.758@gmail.com, angkor.records.758@gmail.com raksasparkle@gmail.com']
+console.log(email);
 
 // router
 const userRoute = require('./routes/userRoutes');
