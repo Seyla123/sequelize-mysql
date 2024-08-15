@@ -1,7 +1,6 @@
 
 
 const nodemailer = require('nodemailer');
-const { resetPassword } = require('../controllers/authController');
 
 const sendEmail = async options => {
   // 1) Create a transporter
@@ -11,8 +10,8 @@ const sendEmail = async options => {
     port: 465,
     secure: true,
     auth: {
-      user: 'seav.seyla.photographer@gmail.com',
-      pass: 'gegw bjgl pthp crax'
+      user: process.env.EMAIL_USERNAME,
+      pass: process.env.EMAIL_PASSWORD
     }
   });
   const htmlContent  = (resetPasswordUrl)=>{ 
@@ -108,7 +107,7 @@ const sendEmail = async options => {
 `};
   // 2) Define the email options
   const mailOptions = {
-    from: '( App Yerng te )TenDance App <seav.seyla.photographer@gmail.com>',
+    from: `( App Yerng te )TenDance App <${process.env.EMAIL_USERNAME}>`,
     to: options.email,
     subject: options.subject,
     text: options.message,
