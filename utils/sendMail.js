@@ -1,6 +1,7 @@
 
 
 const nodemailer = require('nodemailer');
+console.log('email :',process.env.EMAIL_USERNAME);
 
 const sendEmail = async options => {
   // 1) Create a transporter
@@ -14,7 +15,7 @@ const sendEmail = async options => {
       pass: process.env.EMAIL_PASSWORD
     }
   });
-  const htmlContent  = (resetPasswordUrl)=>{ 
+  const htmlContent  = (resetPasswordUrl, UserName)=>{ 
     return `<!DOCTYPE html>
 <html>
 <head>
@@ -37,10 +38,10 @@ const sendEmail = async options => {
         }
         .header {
             text-align: center;
-            margin-bottom: 20px;
+            margin: 20px;
         }
         .header img {
-            max-width: 100px;
+            max-width: 300px;
         }
         .content {
             background-color: #ffffff;
@@ -77,11 +78,11 @@ const sendEmail = async options => {
 </head>
 <body>
     <div class="container">
-        <div class="header">
-            <img src="https://yourcompany.com/logo.png" alt="Your Company Logo">
-        </div>
-        <div class="content">
-            <p>Hi [Recipient's Name],</p>
+    <div class="content">
+    <div class="header">
+        <img src="https://mybucket-seyasj3hj3.s3.amazonaws.com/mydocument/logo-wavw.png" alt="Your Company Logo">
+    </div>
+            <p>Hi ${UserName},</p>
 
             <p>We received a request to reset your password for your account. If you made this request, please click the button below to reset your password:</p>
 
@@ -107,11 +108,11 @@ const sendEmail = async options => {
 `};
   // 2) Define the email options
   const mailOptions = {
-    from: `( App Yerng te )TenDance App <${process.env.EMAIL_USERNAME}>`,
+    from: `WaveTrack App <${process.env.EMAIL_USERNAME}>`,
     to: options.email,
     subject: options.subject,
     text: options.message,
-    html:htmlContent(options.resetURL)
+    html:htmlContent(options.resetURL, options.userName)
   };
 
   // 3) Actually send the email

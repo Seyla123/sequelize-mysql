@@ -99,7 +99,7 @@ exports.forgetPassword = catchAsync(async (req, res, next) => {
     });
 
     // url for reset password
-    const resetURL = `${req.protocol}://https://g7x3q69k-3000.asse.devtunnels.ms/api/v1/users/resetPassword/${resetToken}`;
+    const resetURL = `${req.protocol}://${req.get("host")}/api/v1/users/resetPassword/${resetToken}`;
     // message for reset password
     const message = `Forgot your password? Submit a PATCH request with your new password and passwordConfirm to: ${resetURL}.\nIf you did not forget your password, please ignore this email!`;
     try {
@@ -107,7 +107,8 @@ exports.forgetPassword = catchAsync(async (req, res, next) => {
             email: user.email,
             subject: "Your password reset token (valid for 10 min)",
             message,
-            resetURL
+            resetURL,
+            userName : user.name
         })
         res.status(200).json({
             status: "success",
