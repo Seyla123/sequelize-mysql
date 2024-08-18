@@ -1,7 +1,6 @@
 
 
 const nodemailer = require('nodemailer');
-console.log('email :',process.env.EMAIL_USERNAME);
 
 const sendEmail = async options => {
   // 1) Create a transporter
@@ -116,7 +115,14 @@ const sendEmail = async options => {
   };
 
   // 3) Actually send the email
-  await transporter.sendMail(mailOptions);
+  await transporter.sendMail(mailOptions, (error, info) => {
+    if (error) {
+      console.log('Error occurred:', error.message);
+    } else {
+      console.log('Email sent successfully:', info.response);
+    }
+  });
+  
 };
 
 module.exports = sendEmail;
