@@ -37,7 +37,9 @@ app.use((req, res, next) => {
     console.log('Hello from the middleware 👋');
     next();
   });
-
+  app.get('/', (req, res) => {
+    res.send('Welcome to the Class API! Use /create-class to add a new class.');
+  });
 app.use('/api/v1/users', userRoute);
 
 app.all('*', (req, res, next) => {

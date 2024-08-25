@@ -3,6 +3,8 @@ const dotenv = require('dotenv');
 dotenv.config({ path: '.env' });
 
 const app = require('./app');
+// Endpoint to retrieve data from the Class table
+
 
 const port = process.env.PORT || 3002;
 //syncDatabase();
